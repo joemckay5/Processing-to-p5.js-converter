@@ -1,0 +1,31 @@
+body{
+  background-color: grey;
+}
+#textboxholder{
+  text-align: center;
+}
+#main{
+  font-family: 'Alegreya Sans', sans-serif;
+  background-color: white;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 96%;
+  padding: 20px;
+}
+#input{
+  font-family: 'Source Code Pro';
+  width: 500px;
+  height: 400px;
+}
+#output{
+  font-family: 'Source Code Pro';
+  width: 500px;
+  height: 400px;
+}
+.headding{
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  /*	background-color: green; */
+}
