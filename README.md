@@ -1,2 +1,5 @@
 # Processing-to-p5.js-converter
-Does what it says. Need more here later. 
+
+note: 
+I copied Paul's CSS folder, JS folder and his index file into the directory.  
+
