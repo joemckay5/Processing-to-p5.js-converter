@@ -1,31 +1,104 @@
 body{
   background-color: grey;
+  margin: 0;
+  padding: 0;
 }
 #textboxholder{
   text-align: center;
 }
 #main{
   font-family: 'Alegreya Sans', sans-serif;
-  background-color: white;
-  margin-top: 10px;
+  background-color: #CFD8DC;
+  margin-top: 135px;
   margin-left: auto;
   margin-right: auto;
-  width: 96%;
+  /*width: 100%;*/
   padding: 20px;
 }
 #input{
   font-family: 'Source Code Pro';
   width: 500px;
   height: 400px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 #output{
   font-family: 'Source Code Pro';
   width: 500px;
   height: 400px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-.headding{
-  font-size: 1.2em;
+#processing_textarea{
+  /*width: 550px; // 550*/
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; 
+}
+#p5js_textarea{
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#sketcharea{
+ position: absolute;
+ height: 125px;
+ width: 600px;
+ top: 5px; 
+ left: 600px;
+}
+.titlebar{
+  font-family: 'Alegreya Sans', sans-serif;
+  padding: 5px;
+  padding-left: 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 125px;
+  color: white;
+  background: #607D8B;
+}
+.smalltext{
+ font-size: .8em;
+}
+.heading{
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  font-size: 2.6em;
   font-weight: bold;
-  margin-bottom: 10px;
-  /*	background-color: green; */
+  margin-bottom: 15px;
+  color: #212121;
+}
+.subheading{
+  margin: 0;
+  padding: 0;
+  font-size: 1.0em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #212121;
+}
+
+/* elements */
+a.titlebar-link{
+  color: #CFD8DC;
+}
+button{
+  font-family: 'Alegreya Sans', sans-serif;
+  font-size: 1.2em;
+  width: 500px;
+  height: 35px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+ul{
+  list-style-type: square;
+  background-color: rgba(96,125,139, 0.35);
+  margin: 10px;
+  padding: 5px;
+  width: 800px;
+}
+li{
+  padding-bottom: 4px;
 }

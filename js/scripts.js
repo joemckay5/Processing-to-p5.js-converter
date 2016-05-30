@@ -1,20 +1,3 @@
-/*
-PtoP5JS is (C) 2016, Joseph McKay
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 function pFunk(feelIt) {
   var str = document.getElementById("input").value;
   var str1 = str.replace(/new float\[(\w+)]/g, "new Array($1)")
@@ -37,10 +20,37 @@ function pFunk(feelIt) {
   .replace(/mouseIsPressed\(\)/g, "mousePressed()")
   .replace(/frameRate/g, "frameRate()")
   .replace(/myVar/g, "mothership_connection")
+  .replace(/joe is good/, "joe is very good")
   ;
-  str1 += "\n//Free your mind and your ass will follow - George Clinton";
+
+
+  // Instance Mode
+  // ((\w|\d)+)(\s?\(|\()([^\)]*)\)
+  if( document.getElementById("check_instantiation").checked ) {
+    //alert("converting to instance mode");
+
+    str1 = instantiation(str1);
+  }
 
   document.getElementById("output").value = str1;
+}
+
+// Instance Mode
+function instantiation(raw) {
+  var parsed = raw;
+  var instance_name;
+  if (document.getElementById("text_instantiation").value == null) {
+    instance_name = "mySketchName";
+  }
+  else {
+    instance_name = document.getElementById("text_instantiation").value;
+  }
+
+  parsed = parsed.replace(/function\s((\w|\d)+)(\s?\(|\()([^\)]*)\)\s?\{/g, "p.$1 = function($4) {"); // replace function definitions
+  // ((\w|\d|\.)+)(\s?\(|\()([^\)]*)\)\;
+  parsed = parsed.replace(/((\w|\d)+)(\s?\(|\()([^\)]*)\)\s*\;/g, "p.$1($4) {"); // replace function calls
+  parsed = "var sketch = function( p ) { \n" + parsed + " \n };\n\n" + "var " + document.getElementById("text_instantiation").value + " = new p5(sketch);";
+  return parsed;
 }
 
 

@@ -1,76 +1,97 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
 <head>
-    <meta charset="UTF-8">
-	<title>Processing to P5.js Converter</title>
+	<meta charset="UTF-8">
+	<title>Processing > P5.js</title>
 	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans' rel='stylesheet' type='text/css'>
 	<link href="css/styles.css" rel="stylesheet">
+
+	<script language="javascript" src="libraries/p5.js"></script>
+	<script language="javascript" src="wave.js"></script>
+
 </head>
 <body>
+
+	<div class="titlebar">
+		<p class="heading">Processing to p5.js converter</p>
+		<p class="subheading">This is a find/replace converter for turning simple <a href ="https://processing.org/" class="titlebar-link">Processing</a> sketches into <a href ="https://p5js.org/" class="titlebar-link">p5.js</a> code.</p>
+		<div id="sketcharea"></div>
+	</div>
+
 	<div id="main">
-		<p class="headding">Processing to p5.js converter</p>
-		This is a find/replace converter for turning simple <a href ="https://processing.org/">Processing</a> sketches into <a href ="https://p5js.org/">p5.js</a> code.
-		<div id="textboxholder">
 
-			<textarea id="input" placeholder="Paste processing code here"></textarea>
-			<button onclick="pFunk('Can you feel it?')">convert</button>
-			<textarea id="output" placeholder="P5.js code comes out here"></textarea>
-			<!-- <textarea class="form-control" style="height:200px;" name="trim"></textarea> -->
-			<button onclick="clipboard()">select all</button>
-			<!-- 	<TEXTAREA ID="holdtext" STYLE="display:none;"> -->
+
+		<div id="processing_textarea"> 
+			<textarea id="input" placeholder="Paste Processing code here"></textarea> 
+
+			<textarea id="output" placeholder="P5.js code comes out here"></textarea> 
+
+			<button onclick="pFunk('Can you feel it?')">Convert to p5.js</button> 
+			<button onclick="clipboard()">Select all converted code</button> 
+
 		</div>
+		<br>
+		<br>
+
+		Instantiation: <input type="checkbox" id="check_instantiation"> <input type="text" id="text_instantiation" placeholder="mySketchName"><br> 
+
+		<a href ="http://p5js.org/examples/examples/Instance_Mode_Instantiation.php">What is this? </a> 
+		<br>
 
 
-		<p class="headding">What this converts</p>
+		<p class="heading">What this converts</p>
 		<ul>
-			<li>int, float, String, Char, PImage, long and boolean, all become var</li>
-			<li>size becomes createCanvas</li>
-			<li>void becomes function</li>
-			<li>int [] arrayname = new int [number] becomes var arrayname = new Array(number); </li>
-			<li>pushMatrix() and pushStyle become push()</li>
-			<li>popMatrix and popStyle become pop()</li>
-			<li>mousePressed becomes mouseIsPressed, (but leaves mousePressed() alone)</li>
-			<li>frameRate becomes frameRate()</li>
+			<li>int, float, String, Char, PImage, long and boolean, <b>all become</b> var</li>
+			<li>size <b>becomes</b> createCanvas</li>
+			<li>void <b>becomes</b> function</li>
+			<li>int [] arrayname = new int [number] <b>becomes</b> var arrayname = new Array(number); </li>
+			<li>pushMatrix() <b>and</b> pushStyle <b>become</b> push()</li>
+			<li>popMatrix <b>and</b> popStyle <b>become</b> pop()</li>
+			<li>mousePressed <b>becomes</b> mouseIsPressed <b>(but leaves mousePressed() alone)</b></li>
+			<li>frameRate <b>becomes</b> frameRate()</li>
 		</ul>
 		<br>
-		<p class="headding">What this doesn't do</p>
+		<p class="heading">What this doesn't do</p>
 		<ul>
-			<li> This will not debug or fix your processing code if it's broken. It does not check for syntax, it just converts what's there. </li>
+			<li> This will not debug or fix your Processing code if it's broken. It does not check for syntax, it just converts what's already there. </li>
 			<li>In p5.js you need to assign values to global variables inside setup(). You will have to do this on your own. </li>
 		</ul>
 
-		For example: if you have delared an array in processing above setup like this:
-		<pre>
-			<span style="color: #E2661A;">int</span> [] list = <span style="color: #33997E;">new</span> <span style="color: #E2661A;">int</span> [20];
-			<span style="color: #33997E;">void</span> <span style="color: #006699;"><b>setup</b></span>() {
-				&nbsp;&nbsp;<span style="color: #006699;">size</span>(400, 400);
-			}
-		</pre>
-		the converter will change it to this;
-		<pre>
-			var&nbsp;&nbsp;list&nbsp;=&nbsp;<span style="color: #33997E;">new</span> Array(20);
-			function&nbsp;<span style="color: #006699;"><b>setup</b></span>() {
-				&nbsp;&nbsp;createCanvas(400,&nbsp;400);
-			}
+		For example: if you have declared an array in Processing above the setup function like this:
+<pre>
+	<span style="color: #E2661A;">int</span> [] list = <span style="color: #33997E;">new</span> <span style="color: #E2661A;">int</span> [20];
+	<span style="color: #33997E;">void</span> <span style="color: #006699;"><b>setup</b></span>() {
+	&nbsp;&nbsp;<span style="color: #006699;">size</span>(400, 400);
+}
+	</pre>
+	the converter will change it to this;
+<pre>
+	var&nbsp;&nbsp;list&nbsp;=&nbsp;<span style="color: #33997E;">new</span> Array(20);
+	function&nbsp;<span style="color: #006699;"><b>setup</b></span>() {
+	&nbsp;&nbsp;createCanvas(400,&nbsp;400);
+}
 
-		</pre>
-		but you will need to move the creation of the array into the setup on your own.
-		<pre>
-			var&nbsp;&nbsp;list;
-			function&nbsp;<span style="color: #006699;"><b>setup</b></span>() {
-				&nbsp;&nbsp;createCanvas(400,&nbsp;400);
-				&nbsp;&nbsp;list&nbsp;=&nbsp;<span style="color: #33997E;">new</span> Array(20);
-			}
-		</pre>
+</pre>
+but you will need to move the creation of the array into the setup on your own.
+<pre>
+	var&nbsp;&nbsp;list;
+	function&nbsp;<span style="color: #006699;"><b>setup</b></span>() {
+	&nbsp;&nbsp;createCanvas(400,&nbsp;400);
+	&nbsp;&nbsp;list&nbsp;=&nbsp;<span style="color: #33997E;">new</span> Array(20);
+}
+</pre>
 
-		<ul>
-			<li>This converter will not turn your Processing classes into Javascript prototypes. It leaves arrayList alone as well. </li>
-			<li>There's lots of stuff not implemented in p5.js yet. This converter won't magically fix that - it's just a find/replace javascript thingy for converting simple sketches. </li>
-			<li>This converter does not create the html file you'll need. <a href ="https://p5js.org/download/">Download</a>  an empty example from p5.js to get a sample html and .js files to work from. </li>
+<ul>
+	<li>This converter will not turn your Processing classes into Javascript prototypes. It leaves arrayList alone as well. </li>
+	<li>There's lots of stuff not implemented in p5.js yet. This converter won't magically fix that - it's just a find/replace javascript thingy for converting simple sketches. </li>
+	<li>This converter does not create the html file you'll need. <a href ="https://p5js.org/download/">Download</a>  an empty example from p5.js to get a sample html and .js files to work from. </li>
 
-		</ul>
-	</div>
-	<script src="js/scripts.js"></script>
+</ul>
+<span class="smalltext">
+page made by Joe Mckay, Brennan Pilcher, and Paul Thayer</span>
+</div>
+
+<script src="js/scripts.js"></script>
 </body>
 </html>
